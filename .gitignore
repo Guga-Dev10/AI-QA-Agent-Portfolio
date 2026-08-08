@@ -1,0 +1,10 @@
+# Ambientes virtuais (nunca sobem para o GitHub)
+venv/
+__pycache__/
+
+# O cofre de senhas (Chaves de API)
+.env
+
+# Arquivos de log e temporários do sistema operacional
+.DS_Store
+Thumbs.db
