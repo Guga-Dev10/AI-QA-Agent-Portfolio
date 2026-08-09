@@ -35,3 +35,11 @@ O agente possui autonomia para selecionar e acionar ferramentas de forma indepen
 ## 🛡️ Segurança e Boas Práticas (DevSecOps)
 *   **Gerenciamento de Segredos:** O projeto utiliza variáveis de ambiente (`.env`) para isolar chaves de API, impedindo o vazamento de credenciais no código-fonte.
 *   **Controle de Versão Limpo:** O arquivo `.gitignore` é configurado para excluir ambientes virtuais (`venv/`), arquivos de cache e artefatos gerados dinamicamente em tempo de execução (`*.json`), mantendo o repositório focado exclusivamente no código-estrutura.
+
+## 🧬 Ciclo ReAct e Self-Healing (Auto-Cura)
+O grande diferencial desta arquitetura é a sua capacidade de operar em um **Loop ReAct (Reason + Act)** acoplado à memória de sessão contínua. 
+Quando o agente recebe a tarefa de executar um script de teste:
+1. Ele aciona o terminal e roda o script (ex: `teste_alvo.py`).
+2. Se o interpretador retornar um erro (Stacktrace), o agente **analisa a causa raiz**.
+3. Ele reescreve o código-fonte corrigindo o erro sem intervenção humana.
+4. Ele reexecuta o teste repetidamente até atingir o *status* de sucesso, finalizando com a entrega de um relatório gerencial de execução.
