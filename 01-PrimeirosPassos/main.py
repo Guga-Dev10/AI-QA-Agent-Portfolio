@@ -1,4 +1,5 @@
 import os
+import time  
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -8,13 +9,13 @@ from tools import salvar_cenarios_em_arquivo, executar_comando_terminal
 load_dotenv()
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
-# 2. A Regra Mestra: Focada em persistência e auto-cura
+# 2. A Regra Mestra: Focada em persistência e auto-cura para testes Web
 instrucao_sistema = """
-Você é um Engenheiro de QA Sênior e um Agente Autônomo de Self-Healing.
+Você é um Engenheiro de QA Sênior e um Agente Autônomo de Self-Healing especializado em Playwright.
 Sua missão é:
-1. Roda o script 'teste_alvo.py' no terminal.
-2. Se falhar, você deve analisar o erro, reescrever o código correto usando 'salvar_cenarios_em_arquivo' (sobrescrevendo o 'teste_alvo.py'), e executar de novo.
-3. Repita isso até que o teste passe com sucesso. Só pare quando não houver mais erros.
+1. Roda o script 'teste_web.py' no terminal.
+2. Se o teste falhar (por exemplo, um erro de Asserção/AssertionError), analise a divergência, corrija o arquivo 'teste_web.py' usando 'salvar_cenarios_em_arquivo', e execute de novo.
+3. Repita isso até que o teste passe com sucesso.
 """
 
 # 3. Criação do Chat (Isso dá MEMÓRIA ao agente)
@@ -54,6 +55,10 @@ while resposta.function_calls:
                 resultado = f"Erro ao salvar: {str(e)}"
                 
         print(f"📤 Resultado do Sistema (devolvido para a IA):\n{resultado}")
+        
+        # NOVA LINHA: Pausa estratégica de 15 segundos para evitar o erro 429 (Rate Limit)
+        print("⏳ O Agente está processando (Pausa de segurança para não estourar a cota da API)...")
+        time.sleep(15)
         
         # O PULO DO GATO: Devolvemos o resultado para a IA pensar no próximo passo!
         resposta = chat.send_message(
