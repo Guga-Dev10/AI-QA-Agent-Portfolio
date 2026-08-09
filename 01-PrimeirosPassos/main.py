@@ -19,11 +19,11 @@ Sua missão é:
 
 # 3. Criação do Chat (Isso dá MEMÓRIA ao agente)
 chat = client.chats.create(
-    model='gemini-3.5-flash',
+    model='gemini-flash-latest', # <-- ALTERADO PARA O CURINGA
     config=types.GenerateContentConfig(
         system_instruction=instrucao_sistema,
         tools=[salvar_cenarios_em_arquivo, executar_comando_terminal],
-        temperature=0.1 # Temperatura baixa = respostas focadas e lógicas
+        temperature=0.1
     )
 )
 
