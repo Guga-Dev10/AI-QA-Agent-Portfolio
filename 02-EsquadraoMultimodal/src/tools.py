@@ -47,21 +47,29 @@ def tirar_screenshot_web(url: str, nome_imagem: str = "screenshot.png"):
     except Exception as e:
         return f"Erro ao capturar screenshot: {str(e)}"
 
-def criar_e_executar_load_test(url_alvo: str, usuarios: int = 10, tempo_segundos: int = 15):
+def criar_e_executar_load_test(url_alvo: str, usuarios: int = 10, tempo_segundos: int = 15, cenario_customizado: str = None):
     """
-    Ferramenta: Cria um script de teste de carga usando Locust, executa-o contra uma URL
-    e retorna o relatório de performance (RPS, falhas, latência).
+    Ferramenta: Cria um script de teste de carga avançado usando Locust com caminhos customizados
+    e executa-o em modo headless.
     """
-    codigo_locust = f"""
+    if not cenario_customizado:
+        codigo_locust = f"""
 from locust import HttpUser, task, between
 
 class WebsiteUser(HttpUser):
-    wait_time = between(0.1, 0.5)
+    wait_time = between(0.5, 1.5)
 
-    @task
+    @task(3)
     def index_page(self):
         self.client.get("/")
+
+    @task(1)
+    def view_assets(self):
+        self.client.get("/favicon.ico")
 """
+    else:
+        codigo_locust = cenario_customizado
+
     try:
         with open("locustfile.py", "w", encoding="utf-8") as f:
             f.write(codigo_locust)
@@ -80,7 +88,7 @@ class WebsiteUser(HttpUser):
             errors="replace"
         )
         relatorio = resultado.stdout if resultado.stdout else resultado.stderr
-        return f"Relatório de Teste de Carga Executado com Sucesso:\n{relatorio}"
+        return f"Relatório de Teste de Carga Avançado Executado com Sucesso:\n{relatorio}"
     except Exception as e:
         return f"Erro ao executar o teste de carga com Locust: {str(e)}"
 

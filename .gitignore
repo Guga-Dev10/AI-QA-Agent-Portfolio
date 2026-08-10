@@ -11,3 +11,41 @@ Thumbs.db
 
 # Artefatos gerados pelo Agente de IA (qualquer arquivo .json gerado localmente)
 *.json
+
+# .gitignore
+
+# 1. Ambientes Virtuais (Nunca suba a pasta do seu ambiente)
+venv/
+env/
+ENV/
+.venv/
+
+# 2. Variáveis de Ambiente (Mantenha sua chave de API segura!)
+.env
+.env.local
+
+# 3. Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 4. Ferramentas de Teste e Relatórios Gerados
+.pytest_cache/
+.locust.python/
+*.log
+screenshot.png
+locustfile.py
+teste_automatico.py
+teste_funcional.py
+teste_example.py
+
+# 5. Arquivos de Sistema e Editor
+.DS_Store
+.vscode/
+.idea/
+requirements.txt
+
+# 6. Pastas de relatórios/testes que podem ser geradas dinamicamente
+# (Opcional: deixe se quiser manter o histórico, remova se quiser ignorar)
+reports/
+tests/

@@ -48,16 +48,13 @@ chat = client.chats.create(
 
 # 4. O Desafio de Self-Healing
 prompt_usuario = (
-    "Execute o ciclo completo de QA Autônomo e não pare até terminar todas as tarefas:\n\n"
-    "1. AUDITORIA: Use 'listar_diretorio' para ver o que já existe.\n"
-    "2. TESTE FUNCIONAL: Acesse 'https://example.com'. Use 'tirar_screenshot_web' para validar a interface visualmente. "
-    "   Em seguida, crie o arquivo 'teste_funcional.py' com Playwright para validar o H1 'Example Domain'. "
-    "   Execute o teste. Se falhar, use 'ler_arquivo' e 'salvar_codigo_arquivo' para se auto-curar até o teste passar.\n"
-    "3. TESTE DE CARGA: Use 'criar_e_executar_load_test' contra 'https://example.com' com 10 usuários simultâneos por 10 segundos.\n"
-    "4. RELATÓRIO FINAL: Analise o resultado do teste funcional e as métricas do Locust (RPS e latência) "
-    "   e entregue um relatório executivo consolidado com o estado da aplicação.\n\n"
-    "IMPORTANTE: Você deve realizar todas essas etapas em um único fluxo de pensamento, "
-    "processando as saídas das ferramentas uma após a outra sem interrupções."
+    "Vamos realizar uma auditoria avançada em um novo ambiente de testes.\n"
+    "1. Acesse o site de e-commerce de testes 'https://www.saucedemo.com'.\n"
+    "2. Tire um screenshot da tela de login usando 'tirar_screenshot_web' para validarmos visualmente a interface inicial.\n"
+    "3. Crie um script Playwright chamado 'teste_saucedemo.py' que valide a presença do campo de login e do botão de acesso.\n"
+    "4. Execute um teste de carga avançado usando 'criar_e_executar_load_test' contra 'https://www.saucedemo.com' "
+    "com 15 usuários simultâneos por 15 segundos, simulando navegação em múltiplas rotas.\n"
+    "5. Entregue um relatório consolidado com a análise visual, o status do teste E2E e as métricas de performance do Locust."
 )
 
 resposta = chat.send_message(prompt_usuario)
