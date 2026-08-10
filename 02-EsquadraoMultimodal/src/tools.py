@@ -1,3 +1,4 @@
+import os
 import subprocess
 from playwright.sync_api import sync_playwright
 
@@ -22,11 +23,11 @@ def executar_comando_terminal(comando: str):
             shell=True, 
             capture_output=True, 
             text=True, 
-            encoding="cp1252", 
+            encoding="utf-8", 
             errors="replace"
         )
         if resultado.returncode != 0:
-            return f"O comando falhou com o erro:\n{resultado.stderr}"
+            return f"O comando falhou com o erro:\n{resultado.stderr}\nSaída padrão:\n{resultado.stdout}"
         return f"Comando executado com sucesso:\n{resultado.stdout}"
     except Exception as e:
         return f"Erro crítico ao executar o comando: {str(e)}"
@@ -61,7 +62,6 @@ class WebsiteUser(HttpUser):
     def index_page(self):
         self.client.get("/")
 """
-    
     try:
         with open("locustfile.py", "w", encoding="utf-8") as f:
             f.write(codigo_locust)
@@ -83,3 +83,24 @@ class WebsiteUser(HttpUser):
         return f"Relatório de Teste de Carga Executado com Sucesso:\n{relatorio}"
     except Exception as e:
         return f"Erro ao executar o teste de carga com Locust: {str(e)}"
+
+def ler_arquivo(caminho_arquivo: str):
+    """
+    Ferramenta: Lê o conteúdo de qualquer arquivo no diretório para o agente analisar.
+    """
+    try:
+        with open(caminho_arquivo, "r", encoding="utf-8") as f:
+            conteudo = f.read()
+        return f"Conteúdo do arquivo '{caminho_arquivo}':\n\n{conteudo}"
+    except Exception as e:
+        return f"Erro ao ler o arquivo '{caminho_arquivo}': {str(e)}"
+
+def listar_diretorio(caminho: str = "."):
+    """
+    Ferramenta: Lista todos os arquivos e pastas do diretório atual.
+    """
+    try:
+        arquivos = os.listdir(caminho)
+        return f"Arquivos no diretório '{caminho}': {', '.join(arquivos)}"
+    except Exception as e:
+        return f"Erro ao listar diretório: {str(e)}"
