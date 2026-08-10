@@ -3,7 +3,7 @@ import time
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-from tools import salvar_codigo_arquivo, executar_comando_terminal, tirar_screenshot_web
+from src.tools import salvar_codigo_arquivo, executar_comando_terminal, tirar_screenshot_web
 
 # 1. Carrega as variáveis de ambiente
 load_dotenv()
@@ -21,7 +21,7 @@ Seu objetivo é:
 5. Se o teste falhar, analise o erro do terminal e a imagem novamente (se necessário) para se auto-curar.
 """
 
-print("🤖 Esquadrão Multimodal acionado! Inicializando cérebro (gemini-2.0-flash)...")
+print("🤖 Esquadrão Multimodal acionado! Inicializando cérebro (gemini-flash-latest)...")
 
 # 3. Inicializa o Chat
 chat = client.chats.create(
@@ -35,10 +35,9 @@ chat = client.chats.create(
 
 # 4. O Desafio Multimodal
 prompt_usuario = (
-    "Acesse o site 'https://example.com' usando a ferramenta de screenshot. "
-    "Analise a imagem gerada para descobrir qual é o título principal (o texto maior e mais destacado na tela). "
-    "Depois, crie um script Playwright chamado 'teste_visual.py' que acesse o site e valide se esse texto específico está presente. "
-    "Salve o arquivo, execute no terminal e me reporte o resultado final."
+    "Acesse o site 'https://example.com' usando a ferramenta de screenshot para validar a interface. "
+    "Em seguida, execute um teste de carga utilizando a ferramenta 'criar_e_executar_load_test' "
+    "com 5 usuários por 10 segundos, e me traga o relatório final de performance."
 )
 
 resposta = chat.send_message(prompt_usuario)

@@ -1,4 +1,3 @@
-import os
 import subprocess
 from playwright.sync_api import sync_playwright
 
@@ -46,3 +45,41 @@ def tirar_screenshot_web(url: str, nome_imagem: str = "screenshot.png"):
         return f"Sucesso: Screenshot capturado e salvo como '{nome_imagem}'."
     except Exception as e:
         return f"Erro ao capturar screenshot: {str(e)}"
+
+def criar_e_executar_load_test(url_alvo: str, usuarios: int = 10, tempo_segundos: int = 15):
+    """
+    Ferramenta: Cria um script de teste de carga usando Locust, executa-o contra uma URL
+    e retorna o relatório de performance (RPS, falhas, latência).
+    """
+    codigo_locust = f"""
+from locust import HttpUser, task, between
+
+class WebsiteUser(HttpUser):
+    wait_time = between(0.1, 0.5)
+
+    @task
+    def index_page(self):
+        self.client.get("/")
+"""
+    
+    try:
+        with open("locustfile.py", "w", encoding="utf-8") as f:
+            f.write(codigo_locust)
+    except Exception as e:
+        return f"Erro ao criar o arquivo locustfile.py: {str(e)}"
+
+    comando = f"locust -f locustfile.py --host={url_alvo} --users {usuarios} --spawn-rate 2 --run-time {tempo_segundos}s --headless"
+    
+    try:
+        resultado = subprocess.run(
+            comando, 
+            shell=True, 
+            capture_output=True, 
+            text=True, 
+            encoding="utf-8", 
+            errors="replace"
+        )
+        relatorio = resultado.stdout if resultado.stdout else resultado.stderr
+        return f"Relatório de Teste de Carga Executado com Sucesso:\n{relatorio}"
+    except Exception as e:
+        return f"Erro ao executar o teste de carga com Locust: {str(e)}"
