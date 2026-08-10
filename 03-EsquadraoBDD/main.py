@@ -56,9 +56,12 @@ prompt_usuario = (
     "   para traduzir os steps em chamadas HTTP reais (GET e POST), validando status codes e JSON.\n"
     "9. Execute o comando 'behave features/api_users.feature' no terminal para validar os testes.\n"
     "10. Se houver falhas, aplique o Self-Healing no código Python dos steps.\n"
-    "11. Entregue um RELATÓRIO FINAL EXECUTIVO ALTAMENTE VISUAL com emojis, blocos de destaque e status claros dos testes de API."
-    "12. Entregue um RELATÓRIO FINAL EXECUTIVO ALTAMENTE VISUAL, utilizando tabelas em Markdown, blocos de destaque (blockquotes), "
-    "   emojis estratégicos e status claros (PASS/FAIL), eliminando qualquer formatação em JSON bruto."
+    "1. Garanta que todas as suítes (Web Form Auth, SauceDemo e API JSONPlaceholder) executem com sucesso via 'behave'.\n"
+    "2. Para os testes de API em 'features/steps/api_steps.py', atualize a implementação para que cada requisição (GET e POST) "
+    "   grave um log detalhado de evidência (contendo URL, Payload, Status Code e JSON de resposta) na pasta 'reports/api_evidence.json'.\n"
+    "3. Crie uma automação ou instrua o agente a compilar todas as métricas, status e caminhos das evidências visuais e de API "
+    "   em um arquivo físico na raiz chamado 'reports/relatorio_executivo.md'.\n"
+    "4. Entregue a confirmação de que os arquivos de evidência de API e o relatório executivo físico foram gravados com sucesso."
 )
 
 resposta = chat.send_message(prompt_usuario)
