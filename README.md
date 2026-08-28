@@ -42,4 +42,4 @@ Quando o agente recebe a tarefa de executar um script de teste:
 1. Ele aciona o terminal e roda o script (ex: `teste_alvo.py`).
 2. Se o interpretador retornar um erro (Stacktrace), o agente **analisa a causa raiz**.
 3. Ele reescreve o código-fonte corrigindo o erro sem intervenção humana.
-4. Ele reexecuta o teste repetidamente até atingir o *status* de sucesso, finalizando com a entrega de um relatório gerencial de execução.
+4. Ele reexecuta o teste repetidamente até atingir o *status* de sucesso, finalizando com a entrega de um relatório gerencial de execução
